@@ -6,19 +6,18 @@ var fs = require('fs');
 // var exports = module.exports = {};
 
 var webpage = 'http://substack.net/images/';
+var website = 'http://substack.net';
 
 request(webpage, function (error, response, body) {
   if (!error && response.statusCode == 200) {
     var data = [];
     var $ = cheerio.load(body);
-    var rows = $('table').find('tr').text();
+
     $('table').find('tr').each(function(i, elem){
-
-      console.log($(this).find('td:first-child').text());
+      var permission = $(this).find('td:first-child').text();
+      var url = website + $(this).find('a').attr('href');
+      var type = $(this).find('td').last().text().split('.')[1];
     });
-
-    // for (var i = 0; i < $rows.length; i++){
-    // }
 
   } else {
     console.log('FAIL!');
